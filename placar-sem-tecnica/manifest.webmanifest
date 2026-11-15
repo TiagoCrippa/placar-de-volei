@@ -1,0 +1,16 @@
+{
+  "name": "Placar Sem Técnica F.C.",
+  "short_name": "Sem Técnica",
+  "description": "Placar de vôlei do Sem Técnica F.C.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "fullscreen",
+  "orientation": "any",
+  "background_color": "#060606",
+  "theme_color": "#060606",
+  "lang": "pt-BR",
+  "icons": [
+    { "src": "assets/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "assets/logo.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+  ]
+}

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#060606">
+  <meta name="description" content="Placar de vôlei oficial do Sem Técnica F.C.">
+  <title>Placar · Sem Técnica F.C.</title>
+  <link rel="icon" type="image/png" href="assets/icon-192.png">
+  <link rel="apple-touch-icon" href="assets/icon-192.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <img src="assets/logo.png" class="brand-logo" alt="Sem Técnica F.C.">
+    <div class="match-info">
+      <span id="setLabel" class="set-label">1º SET</span>
+      <span id="modeLabel" class="mode-label">Vôlei de quadra · melhor de 5</span>
+    </div>
+    <div class="top-actions">
+      <button id="btnFullscreen" class="icon-btn" type="button" title="Tela cheia (F)" aria-label="Tela cheia">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>
+      </button>
+      <button id="btnSettings" class="icon-btn" type="button" title="Configurações" aria-label="Configurações">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="board" id="board">
+    <section class="team" id="panelLeft" aria-live="polite">
+      <div class="team-head">
+        <button class="serve" type="button" title="Definir saque" aria-label="Definir saque para este time"></button>
+        <h2 class="team-name"></h2>
+      </div>
+      <span class="badge"></span>
+      <button class="score-btn" type="button" aria-label="Adicionar ponto">
+        <span class="score">0</span>
+        <span class="tap-hint">toque para +1</span>
+      </button>
+      <div class="team-foot">
+        <button class="pill minus" type="button" aria-label="Remover ponto">−1</button>
+        <div class="timeouts"><span class="to-label">Tempos</span><span class="to-dots"></span></div>
+        <button class="pill timeout-btn" type="button">Tempo</button>
+      </div>
+    </section>
+
+    <aside class="center">
+      <span class="sets-label">Sets</span>
+      <div class="sets">
+        <span id="setsLeft">0</span><span class="x">×</span><span id="setsRight">0</span>
+      </div>
+      <ol id="history" class="history" aria-label="Parciais"></ol>
+      <button id="btnNextSet" class="next-set-btn" type="button" hidden>Próximo set ▶</button>
+      <button id="btnNewCenter" class="next-set-btn" type="button" hidden>Nova partida</button>
+    </aside>
+
+    <section class="team" id="panelRight" aria-live="polite">
+      <div class="team-head">
+        <button class="serve" type="button" title="Definir saque" aria-label="Definir saque para este time"></button>
+        <h2 class="team-name"></h2>
+      </div>
+      <span class="badge"></span>
+      <button class="score-btn" type="button" aria-label="Adicionar ponto">
+        <span class="score">0</span>
+        <span class="tap-hint">toque para +1</span>
+      </button>
+      <div class="team-foot">
+        <button class="pill minus" type="button" aria-label="Remover ponto">−1</button>
+        <div class="timeouts"><span class="to-label">Tempos</span><span class="to-dots"></span></div>
+        <button class="pill timeout-btn" type="button">Tempo</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="controls">
+    <button class="ctrl" id="btnUndo" type="button" title="Desfazer (U ou Ctrl+Z)">↶ <span>Desfazer</span></button>
+    <button class="ctrl" id="btnServe" type="button" title="Trocar saque">🏐 <span>Trocar saque</span></button>
+    <button class="ctrl" id="btnSwap" type="button" title="Trocar lados (S)">⇄ <span>Trocar lados</span></button>
+    <button class="ctrl" id="btnNew" type="button" title="Nova partida">↻ <span>Nova partida</span></button>
+  </footer>
+
+  <!-- Resultado de set / partida -->
+  <dialog id="resultDialog" class="result">
+    <img src="assets/logo.png" alt="" class="result-logo" id="resultLogo">
+    <h3 id="resultTitle"></h3>
+    <p id="resultWinner" class="result-winner"></p>
+    <p id="resultScore" class="result-score"></p>
+    <ol id="resultPartials" class="result-partials"></ol>
+    <div class="dialog-actions">
+      <button type="button" class="pill" id="resultUndo">↶ Desfazer ponto</button>
+      <button type="button" class="pill" id="resultShare" hidden>Compartilhar</button>
+      <button type="button" class="pill primary" id="resultNext" autofocus>Próximo set ▶</button>
+      <button type="button" class="pill primary" id="resultNew" hidden>Nova partida</button>
+    </div>
+  </dialog>
+
+  <!-- Pedido de tempo -->
+  <dialog id="timeoutDialog" class="timeout">
+    <span class="timeout-label">Pedido de tempo</span>
+    <h3 id="timeoutTeam"></h3>
+    <div id="timeoutCount" class="timeout-count">30</div>
+    <div class="dialog-actions">
+      <button type="button" class="pill primary" id="timeoutClose">Retomar jogo</button>
+    </div>
+  </dialog>
+
+  <!-- Configurações -->
+  <dialog id="settingsDialog" class="settings">
+    <form id="settingsForm" method="dialog">
+      <h3>Configurações</h3>
+      <label>Nosso time
+        <input name="home" maxlength="30" required autocomplete="off">
+      </label>
+      <label>Adversário
+        <input name="away" maxlength="30" required autocomplete="off">
+      </label>
+      <div class="grid-2">
+        <label>Modalidade
+          <select name="mode">
+            <option value="quadra">Vôlei de quadra</option>
+            <option value="praia">Vôlei de praia</option>
+          </select>
+        </label>
+        <label>Partida
+          <select name="bestOf">
+            <option value="1">Set único</option>
+            <option value="3">Melhor de 3</option>
+            <option value="5">Melhor de 5</option>
+          </select>
+        </label>
+        <label>Pontos por set
+          <input name="points" type="number" min="1" max="99" required>
+        </label>
+        <label>Pontos no tie-break
+          <input name="tiebreak" type="number" min="1" max="99" required>
+        </label>
+        <label>Tempos por set
+          <input name="timeouts" type="number" min="0" max="5" required>
+        </label>
+        <label>Duração do tempo (s)
+          <input name="timeoutSeconds" type="number" min="5" max="300" required>
+        </label>
+      </div>
+      <label class="check"><input type="checkbox" name="autoSwitch"> Trocar de lado automaticamente</label>
+      <label class="check"><input type="checkbox" name="sound"> Som e vibração</label>
+      <p class="hint">Atalhos: <kbd>A</kbd>/<kbd>←</kbd> +1 esquerda · <kbd>L</kbd>/<kbd>→</kbd> +1 direita · <kbd>Z</kbd>/<kbd>M</kbd> −1 · <kbd>U</kbd> desfazer · <kbd>S</kbd> trocar lados · <kbd>N</kbd> próximo set · <kbd>F</kbd> tela cheia</p>
+      <div class="dialog-actions">
+        <button type="button" class="pill" id="settingsCancel">Cancelar</button>
+        <button type="submit" class="pill primary">Salvar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
